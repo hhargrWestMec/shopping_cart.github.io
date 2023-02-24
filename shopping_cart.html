@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Items to cart </title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        ul {
+          list-style-type: none;  
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        li {
+            height: 250px;
+            width: 250px;
+            border: 5px solid black;
+            border-radius: 10px;
+            margin: 50px;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        p {
+            width: 70%;
+            margin-left: 15%;
+            text-align: center;
+            font-size: 1.5em;
+        }
+    </style>
+</head>
+<body>
+
+    <ul id="mainList">
+        <li> Item One <button> Add Item </button> <button> Remove Item </button></li>
+        <li> Item Two <button> Add Item </button> <button> Remove Item </button></li>
+        <li> Item Three <button> Add Item </button> <button> Remove Item </button></li>
+    </ul>
+
+    <p id="output">
+
+    </p>
+    
+
+    <script>
+        let buttons = document.getElementsByTagName('button');
+        const output = document.getElementById('output');
+        const array = [];
+        
+        buttons[0].addEventListener('click', () => {array.push('Item One'); console.log(array); updateOutput(array)});
+        buttons[2].addEventListener('click', () => {array.push('Item Two'); console.log(array); updateOutput(array)});
+        buttons[4].addEventListener('click', () => {array.push('Item Three'); console.log(array); updateOutput(array)});
+
+        buttons[1].addEventListener('click', () => {let index1 = array.indexOf('Item One'); if ( index1 != -1 ) { array.splice(index1, 1); console.log(array)}; updateOutput(array)});
+        buttons[3].addEventListener('click', () => {let index2 = array.indexOf('Item Two'); if ( index2 != -1 ) { array.splice(index2, 1); console.log(array)}; updateOutput(array)});
+        buttons[5].addEventListener('click', () => {let index3 = array.indexOf('Item Three'); if ( index3 != -1 ) { array.splice(index3, 1); console.log(array)}; updateOutput(array)});
+
+
+        function updateOutput (array) {
+            let text = array[0];
+            for ( let i = 1; i < array.length; i++ ){
+                text += `, ${array[i]}`;
+            }
+
+            if ( array.length != 0 ) {
+                output.innerText = text;
+            } else {
+                output.innerText = 'No Items';
+            }
+        }
+
+        updateOutput(array);
+
+        function newItem (itemName) {
+            const list = document.getElementsByTagName('li');
+            const ul = document.getElementById('mainList');
+            let li = document.createElement('li');
+
+            li.innerHTML = `${itemName} <button> Add Item </button> <button> Remove Item </button>`;
+
+            ul.append(li)
+
+            buttons = document.getElementsByTagName('button');
+            buttons[buttons.length-2].addEventListener('click', () => {array.push(itemName); console.log(array); updateOutput(array)});
+            buttons[buttons.length-1].addEventListener('click', () => {let index3 = array.indexOf(itemName); if ( index3 != -1 ) { array.splice(index3, 1); console.log(array)}; updateOutput(array)});
+
+            
+        }
+
+        newItem('Item Four');
+
+    </script>
+</body>
+</html>
